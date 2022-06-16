@@ -1,0 +1,65 @@
+<%- include('partials/header')  %>
+
+  <body id="login-form" class="d-flex">
+    <div class="container bg-dark m-auto px-5 py-5 rounded-3">
+      <h1 class="text-white">USER LIST AND REGISTRATION</h1>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <%- include('partials/create')  %>
+          <%- include('partials/lists')  %>
+        </div>
+        <div class="col-lg-6 text-white">
+            <h4>ABOUT USER</h4>
+            <table class="table text-white">
+                <tbody>
+                  <tr>
+                    <td>Username</td>
+                    <td><%= user.username %> </td>
+                  </tr>
+                  <tr>
+                    <td>Full Name</td>
+                    <td><%= user.fullname %></td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td><%= user.biodata.description %></td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td><%= user.biodata.address %></td>
+                  </tr>
+                  <tr>
+                    <td>Age</td>
+                    <td><%= user.biodata.age %></td>
+                  </tr>
+                  <tr>
+                    <td>Total Play</td>
+                    <td><%= user.history.length %></td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table text-white">
+                <thead>
+                  <tr>
+                    <th scope="col">Game History</th>
+                    <th scope="col">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for( let i = 0; i < user.history.length; i++ ) { %>
+                    <tr>
+                      <td><%= user.history[i].game_name %></td>
+                      <td><%= user.history[i].score %> </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+   
+  </body>
+</html>
