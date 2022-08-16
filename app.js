@@ -4,15 +4,24 @@ var path = require('path');
 var logger = require('morgan');
 const flash = require('express-flash')
 const session = require('express-session')
+const { User_game } = require('./models')
 
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var apiRouter = require('./routes/api');
 var methodOverride = require('method-override')
-const restrict = require('./middlewares/restrict')
+
+
+const passportjwt = require('./lib/passportjwt')
+
+
 
 // var authorization = require('./middlewares/authorization');
 var app = express();
+
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
 
 app.use(session({
   secret: 'secret code!!',
@@ -20,14 +29,38 @@ app.use(session({
   saveUninitialized: false
 }))
 
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-
 const passport = require('./lib/passport')
-const passportjwt = require('./lib/passportjwt')
-var LocalStrategy = require('passport-local');
 app.use(passport.initialize())
 app.use(passport.session())
+
+//Middleware to see how the params are populated by Passport
+let count = 1
+
+printData = (req, res, next) => {
+    // console.log("\n==============================")
+    // console.log(`------------>  ${count++}`)
+
+    // console.log(`req.body.username -------> ${req.body.username}`) 
+    // console.log(`req.body.password -------> ${req.body.password}`)
+
+    // console.log(`\n req.session.passport -------> `)
+    // console.log(req.session.passport)
+  
+    // console.log(`\n req.user -------> `) 
+    // console.log(req.user) 
+  
+    // console.log("\n Session and Cookie")
+    // console.log(`req.session.id -------> ${req.session.id}`) 
+    // console.log(`req.session.cookie -------> `) 
+    // console.log(req.session.cookie) 
+  
+    // console.log("===========================================\n")
+
+    next()
+}
+
+const restrict = require('./middlewares/restrict')
+app.use(printData) //user printData function as middleware to print populated variables
 
 app.use(flash())
 
@@ -42,6 +75,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
 app.use('/', indexRouter);
+// app.use('/admin', restrict, adminRouter);
 app.use('/admin', restrict, adminRouter);
 app.use('/api/v1', apiRouter);
 

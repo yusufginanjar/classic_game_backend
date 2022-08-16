@@ -5,7 +5,7 @@ const webController = require('../controllers/webController');
 const restrict = require('../middlewares/restrict')
 
 /* GET home page. */
-router.get('/', webController.index);
+router.get('/', restrict, webController.index);
 
 /* Login */
 router.get('/login', webController.loginView);
@@ -19,7 +19,5 @@ router.get('/whoami', restrict, webController.whoami)
 /* 1. view */
 router.get('/rock-paper-scissors', restrict, webController.rockPaperScissorsView);
 router.get('/create-room', restrict, webController.createRoom);
-
-
 
 module.exports = router;

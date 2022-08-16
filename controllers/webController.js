@@ -19,27 +19,9 @@ module.exports = {
     }),
     
 
-        // var loginSuccess = false;  // init value for loginSuccess is false
-        // for (let i = 0; i < db.length; i++) {
-        //     if((req.body.username === db[i].username) && (req.body.password === db[i].password)){
-        //         loginSuccess = true; // Set loginSuccess = true if user input correct username & password
-        //     }
-        // }
-    
-        // if(loginSuccess === true){
-        //     res.status(200);
-        //      res.redirect('/admin');
-    
-        // } else {
-        //     res.status(401);
-        //     res.render('login', { title: 'Login', errorMessage : 'Wrong username or password' });
-        // }
-    // },
-
     whoami: (req, res) => {
         /* req.user adalah instance dari User Model, hasil autentikasi dari passport. */
-        console.log(req.User_game.dataValues);
-        res.render('profile', User_game.dataValues) 
+        res.render('profile', req.user.dataValues) 
     },
 
     registerView: async (req, res) => {
@@ -64,14 +46,14 @@ module.exports = {
                 User_game_history.create({
                     user_id : id,
                     game_name : "Rock Paper Scissors",
-                    score: 100,
+                    win: 3,
                     approved: true
                 })
 
                 User_game_history.create({
                     user_id : id,
                     game_name : "Rock Paper Scissors",
-                    score: 90,
+                    win: 4,
                     approved: true
                 })
             })

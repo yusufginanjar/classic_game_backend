@@ -11,6 +11,7 @@ module.exports = {
     },
 
     details : async (req, res) => {
+        console.log(req.params.id);
         User_game.findAll().then(users => {
             User_game.findOne({
                 include: [
@@ -22,7 +23,7 @@ module.exports = {
                     },
                     {
                         model: User_game_history,
-                        attributes: ["game_name", "score"],
+                        attributes: ["game_name"],
                         as: "history",
                         required: false
                     },
@@ -50,15 +51,16 @@ module.exports = {
                 // add dummy history
                 User_game_history.create({
                     user_id : id,
+                    room_game_id : 1,
                     game_name : "Rock Paper Scissors",
-                    score: 100,
+                    win: 1,
                     approved: true
                 })
     
                 User_game_history.create({
                     user_id : id,
                     game_name : "Rock Paper Scissors",
-                    score: 90,
+                    win: 1,
                     approved: true
                 })
             })
@@ -104,7 +106,8 @@ module.exports = {
             }
         ).then(
             res.redirect('/admin')
-        ))
+        )
+        )
     },
 
     delete : async (req, res) => {

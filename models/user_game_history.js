@@ -15,8 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   User_game_history.init({
     user_id: DataTypes.INTEGER,
+    room_game_id: DataTypes.INTEGER,
     game_name: DataTypes.STRING,
-    score: DataTypes.INTEGER,
+    total_played: DataTypes.INTEGER,
+    win: DataTypes.INTEGER,
+    draw: DataTypes.INTEGER,
+    lose: DataTypes.INTEGER,
     approved: DataTypes.BOOLEAN
   }, {
     sequelize,
